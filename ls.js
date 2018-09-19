@@ -1,12 +1,16 @@
 const fs = require('fs');
 
-module.exports = function () {
+module.exports = function (done) {
+  done('\n3')
+
+  // async - handler func
   fs.readdir('./', 'utf8', (err,files) => {
     if (err) {
       throw err;
     } else {
-      process.stdout.write(files.join('\n'))
+      done(files.join('\n'))
     }
+    done('\ndone - ls')
+
   })
 }
-

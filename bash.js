@@ -1,16 +1,38 @@
 const pwdFunc = require('./pwd.js');
 const lsFunc = require('./ls.js');
-process.stdout.write('prompt > ');
+const catFunc = require('./cat');
+const curlFunc = require('./curl');
+
+const prompt = (data) => process.stdout.write(data)
+
+prompt('> ');
+
+//at the end of the output, i'm not given the '> ' to enter another cmd but i can anyway - why?
 process.stdin.on('data', (data) => {
-    const cmd = data.toString().trim();
+    const entry = data.toString().trim();
+
+    const cmd = entry.split(' ')[0];
+    const arg = entry.split(' ')[1];
+
+    prompt('\n1');
+
+    //pass standard prompt func to all modules as a func param
+    //you can't require prompt in module files - that would create a circular dependency
+    //instead, prompt is a func - pass it to other funcs so it will be available in other modules
 
     if (cmd === 'pwd') {
-        pwdFunc();
+        pwdFunc(prompt);
     } else if (cmd === 'ls') {
-        lsFunc();
+        lsFunc(prompt);
+    } else if (cmd === 'cat') {
+        catFunc(arg, prompt)
+    } else if (cmd === 'curl') {
+        curlFunc(arg, prompt)
     } else {
-        process.stdout.write('You typed: ' + cmd);
+        prompt('\nYou typed: ' + cmd);
     }
-    process.stdout.write('\nprompt > ');
+
+    prompt('\ndone - bash')
+
 });
 
