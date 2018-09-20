@@ -12,5 +12,6 @@ module.exports = (url, done) => {
         } else {
             done(body);
         }
+        done('\n> ');
     })
 }

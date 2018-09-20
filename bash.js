@@ -14,8 +14,6 @@ process.stdin.on('data', (data) => {
     const cmd = entry.split(' ')[0];
     const arg = entry.split(' ')[1];
 
-    prompt('\n1');
-
     //pass standard prompt func to all modules as a func param
     //you can't require prompt in module files - that would create a circular dependency
     //instead, prompt is a func - pass it to other funcs so it will be available in other modules
@@ -29,10 +27,14 @@ process.stdin.on('data', (data) => {
     } else if (cmd === 'curl') {
         curlFunc(arg, prompt)
     } else {
-        prompt('\nYou typed: ' + cmd);
+        prompt(`\nYou typed: ${cmd}`);
+        prompt('\n> ')
     }
 
-    prompt('\ndone - bash')
+    //WE DO NOT NEED TO PROMPT AGAIN AT THE END
+    //WE ARE PRACTICING ASYNC FUNCS
+    //THIS PROMPT RUNS BEFORE ANY OF THE OTHER MODULES - THATS WHY IT WASN'T LANDING ON A NEW LINE
+    // prompt('\n> ')
 
 });
 

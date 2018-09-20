@@ -8,5 +8,6 @@ module.exports = (fileName, done) => {
         } else {
             done(data)
         }
+        done('\n> ');
     })
 }
